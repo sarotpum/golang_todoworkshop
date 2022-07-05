@@ -3,7 +3,7 @@ package api
 import (
 	// "fmt"
 	// "path/filepath"
-	// "go-todo-workshop/database"
+	"go-todo-workshop/database"
 	// "io"
 	// "log"
 	// "os"
@@ -20,42 +20,42 @@ type CreateTodo struct {
 }
 
 func GetAllLists(c *gin.Context) {
-	// var todoLists []database.Todo
-	// database.DB.Find(&todoLists)
-	c.JSON(http.StatusOK, gin.H{"To Do Lists": "todoLists"})
+	var todoLists []database.Todo
+	database.DB.Find(&todoLists)
+	c.JSON(http.StatusOK, gin.H{"Results : ": todoLists})
 }
 
 func CreateTodoList(c *gin.Context) {
-	// var input CreateTodo
-	// if err := c.ShouldBindJSON(&input); err != nil {
-	// 	c.JSON(http.StatusOK, gin.H{"error": err.Error})
-	// 	return
-	// }
+	var input CreateTodo
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusOK, gin.H{"error": err.Error})
+		return
+	}
 
-	//  todoList := database.Todo{Username: input.Username, Title: input.Title, Message: input.Message}
-	// database.DB.Create(&todoList)
+	todoList := database.Todo{Username: input.Username, Title: input.Title, Message: input.Message}
+	database.DB.Create(&todoList)
 
-	c.JSON(http.StatusOK, gin.H{"To Do List": "todoList"})
+	c.JSON(http.StatusOK, gin.H{"To Do List": todoList})
 }
 
 func GetTodoList(c *gin.Context) {
-	// var todoLists []database.Todo
+	var todoLists []database.Todo
 
-	//  if err := database.DB.Where("username = ?", c.Query("username")).Find(&todoLists).Error; err != nil {
-	// 	c.JSON(http.StatusOK, gin.H{"error": "Record not found!"})
-	// 	return
-	//  }
+	if err := database.DB.Where("username = ?", c.Query("username")).Find(&todoLists).Error; err != nil {
+		c.JSON(http.StatusOK, gin.H{"error": "Record not found!"})
+		return
+	}
 
-	c.JSON(http.StatusOK, gin.H{"List": "todoLists"})
+	c.JSON(http.StatusOK, gin.H{"List": todoLists})
 }
 
 func DeleteList(c *gin.Context) {
-	// var todoList database.Todo
+	var todoList database.Todo
 
-	// if err := database.DB.Where("id = ?", c.Param("id")).Find(&todoList).Error; err != nil {
-	// 	c.JSON(http.StatusOK, gin.H{"error": "Record not found!"})
-	// 	return
-	// }
+	if err := database.DB.Where("id = ?", c.Param("id")).Find(&todoList).Error; err != nil {
+		c.JSON(http.StatusOK, gin.H{"error": "Record not found!"})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{"data": true})
 }
@@ -72,7 +72,7 @@ func Upload(c *gin.Context) {
 	// 	log.Fatal(err)
 	// }
 	// defer out.Close()
-	// _, err, io.Copy(out, file)
+	// _ , err = io.Copy(out, file)
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }

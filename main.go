@@ -1,8 +1,8 @@
 package main
 
 import (
-	// "go-todo-workshop/database"
 	"go-todo-workshop/api"
+	"go-todo-workshop/database"
 	"net/http"
 
 	"github.com/gin-contrib/cors"
@@ -16,9 +16,9 @@ func main() {
 	config.AllowOrigins = []string{"http://localhost:3000"}
 	r.Use(cors.New(config))
 
-	//  database.ConfigDatabase()
+	database.ConnectDatabase()
 
-	r.GET("/", api.CreateTodoList)
+	r.GET("/", api.GetAllLists)
 	r.GET("/user", api.GetTodoList)
 	r.POST("/", api.CreateTodoList)
 	r.DELETE("/:id", api.DeleteList)
