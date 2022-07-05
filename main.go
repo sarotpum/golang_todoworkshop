@@ -21,7 +21,7 @@ func main() {
 	r.GET("/", api.GetAllLists)
 	r.GET("/user", api.GetTodoList)
 	r.POST("/", api.CreateTodoList)
-	r.DELETE("/:id", api.DeleteList)
+	r.DELETE("/delete/:id", api.DeleteList)
 	r.POST("/upload", api.Upload)
 	r.StaticFS("/file", http.Dir("public"))
 
